@@ -1,19 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg-gradient-start: #023047;
-  --bg-gradient-end: #219ebc;
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --accent: #ffb703;
-  --accent-hover: #fb8500;
-  --danger: #ef4444;
-  --card-radius: 24px;
-  --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #0d0f2b;
+  --glass-bg: rgba(15, 15, 45, 0.6);
+  --glass-bg-light: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(120, 100, 255, 0.2);
+  --glass-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --text-primary: #e8e8ff;
+  --text-secondary: rgba(180, 175, 255, 0.75);
+  --accent: #7c5cfc;
+  --accent-glow: rgba(124, 92, 252, 0.45);
+  --accent-hover: #9b7dff;
+  --neon-green: #00f5a0;
+  --neon-blue: #00d4ff;
+  --danger: #ff4d6d;
+  --danger-glow: rgba(255, 77, 109, 0.3);
+  --card-radius: 16px;
+  --font-main: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -24,64 +30,88 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-gradient-start);
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(33, 158, 188, 0.5), transparent 60%),
-    radial-gradient(circle at 85% 30%, rgba(255, 183, 3, 0.4), transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(251, 133, 0, 0.4), transparent 50%);
-  background-size: 200% 200%;
-  animation: glowingAtmosphere 15s ease infinite;
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at 0% 0%, rgba(124, 92, 252, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 0%, rgba(0, 245, 160, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 212, 255, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 60%, rgba(124, 92, 252, 0.15) 0%, transparent 40%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow-x: hidden;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-@keyframes glowingAtmosphere {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Aurora particle lines */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 120px,
+      rgba(124, 92, 252, 0.03) 120px,
+      rgba(124, 92, 252, 0.03) 121px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 120px,
+      rgba(0, 245, 160, 0.03) 120px,
+      rgba(0, 245, 160, 0.03) 121px
+    );
+  pointer-events: none;
+  z-index: 0;
 }
 
 #root {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: center;
 }
 
 /* Typography */
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
   text-align: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #ffffff 0%, var(--neon-green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 p {
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* Glassmorphism Utilities */
+/* Glass Panel — Neon Bordered */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--card-radius);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 /* Layout Utilities */
@@ -110,83 +140,123 @@ p {
   cursor: pointer;
   transition: var(--transition);
   padding: 0.5rem;
-  border-radius: 50%;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .icon-btn:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
+  color: var(--neon-green);
+  background: rgba(0, 245, 160, 0.08);
+  transform: scale(1.1);
 }
 
 .primary-btn {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #a855f7);
   color: #fff;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 999px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   font-family: var(--font-main);
-  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .primary-btn:hover {
-  background: var(--accent-hover);
+  background: linear-gradient(135deg, var(--accent-hover), #c084fc);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 8px 30px var(--accent-glow);
 }
 
 /* Inputs */
 .glass-input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--glass-border);
-  padding: 1rem 1.5rem;
-  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(120, 100, 255, 0.25);
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
   color: var(--text-primary);
   font-family: var(--font-main);
-  font-size: 1.1rem;
+  font-size: 1rem;
   outline: none;
   transition: var(--transition);
+  letter-spacing: 0.01em;
 }
 
 .glass-input::placeholder {
-  color: var(--text-secondary);
+  color: rgba(180, 175, 255, 0.4);
+  font-style: italic;
 }
 
 .glass-input:focus {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(124, 92, 252, 0.08);
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.15), 0 0 20px rgba(124, 92, 252, 0.1);
+}
+
+/* App container specific */
+.app-container {
+  width: 100%;
+  max-width: 580px;
+}
+
+/* Neon tag/badge */
+.neon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-green);
+  background: rgba(0, 245, 160, 0.1);
+  border: 1px solid rgba(0, 245, 160, 0.25);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+}
+
+/* Divider */
+.neon-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 92, 252, 0.4), transparent);
+  border: none;
+  margin: 0;
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+@keyframes pulseNeon {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px var(--neon-green)); }
+  50%       { opacity: 0.7; filter: drop-shadow(0 0 2px var(--neon-green)); }
 }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes auroraShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulseNeon 3s ease-in-out infinite;
 }
 
 .animate-spin {

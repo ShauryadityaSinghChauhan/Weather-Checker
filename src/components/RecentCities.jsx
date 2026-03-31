@@ -1,36 +1,53 @@
+import { MapPin } from 'lucide-react';
+
 export default function RecentCities({ cities, onSelectCity }) {
   if (!cities || cities.length === 0) return null;
 
   return (
     <div className="animate-fade-in">
-      <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
-        Recently Searched
-      </h3>
-      <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+      <p style={{
+        fontSize: '0.72rem',
+        fontFamily: 'var(--font-mono)',
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        color: 'rgba(180,175,255,0.45)',
+        marginBottom: '0.85rem',
+      }}>
+        Recent Searches
+      </p>
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         {cities.map((city, index) => (
           <button
             key={`${city}-${index}`}
             onClick={() => onSelectCity(city)}
-            className="glass-panel" 
-            style={{ 
-              padding: '0.5rem 1rem', 
-              borderRadius: '999px', 
-              fontSize: '0.9rem', 
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+              padding: '0.4rem 0.9rem',
+              borderRadius: '6px',
+              fontSize: '0.85rem',
+              fontFamily: 'var(--font-main)',
               cursor: 'pointer',
-              border: '1px solid var(--glass-border)',
-              background: 'rgba(255, 255, 255, 0.05)',
-              color: 'var(--text-primary)',
-              transition: 'var(--transition)'
+              border: '1px solid rgba(124, 92, 252, 0.2)',
+              background: 'rgba(124, 92, 252, 0.07)',
+              color: 'var(--text-secondary)',
+              transition: 'var(--transition)',
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.background = 'rgba(124, 92, 252, 0.18)';
+              e.currentTarget.style.color = 'var(--text-primary)';
+              e.currentTarget.style.borderColor = 'rgba(124, 92, 252, 0.45)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.background = 'rgba(124, 92, 252, 0.07)';
+              e.currentTarget.style.color = 'var(--text-secondary)';
+              e.currentTarget.style.borderColor = 'rgba(124, 92, 252, 0.2)';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
+            <MapPin size={11} />
             {city}
           </button>
         ))}

@@ -13,21 +13,29 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ position: 'relative' }}>
-      <input 
-        type="text" 
-        className="glass-input" 
-        placeholder="Search for a city..." 
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <button 
+    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+      <div style={{ position: 'relative', flex: 1 }}>
+        <Search
+          size={16}
+          color="rgba(180,175,255,0.45)"
+          style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+        />
+        <input
+          type="text"
+          className="glass-input"
+          placeholder="Search city..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          style={{ paddingLeft: '2.6rem', borderRadius: '10px' }}
+        />
+      </div>
+      <button
         type="submit"
-        className="icon-btn" 
-        style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)' }}
+        className="primary-btn"
+        style={{ padding: '0.85rem 1.4rem', whiteSpace: 'nowrap' }}
         aria-label="Search"
       >
-        <Search size={20} />
+        Search
       </button>
     </form>
   );

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
 import RecentCities from './components/RecentCities';
-import { CloudRain, Loader2 } from 'lucide-react';
+import { Satellite, Loader2 } from 'lucide-react';
 import { fetchWeatherByCity } from './services/weatherApi';
 import './App.css';
 
@@ -52,7 +52,7 @@ function App() {
   }, [city, unit]);
 
   const handleSearch = (searchedCity) => {
-    if(searchedCity.trim() !== '') setCity(searchedCity);
+    if (searchedCity.trim() !== '') setCity(searchedCity);
   };
 
   const handleCitySelect = (selectedCity) => {
@@ -64,48 +64,88 @@ function App() {
   };
 
   return (
-    <div className="app-container animate-fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <header className="flex-center flex-column" style={{ marginBottom: '2rem' }}>
-        <div className="flex-center" style={{ gap: '0.5rem', marginBottom: '1rem' }}>
-          <CloudRain size={40} color="var(--accent)" />
+    <div className="app-container animate-fade-in">
+      {/* Header */}
+      <header style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.9rem' }}>
+          <div className="neon-tag">
+            <Satellite size={11} />
+            Live Data
+          </div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.6rem' }}>
           <h1>Weather Checker</h1>
         </div>
-        <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
           Real-time weather updates for any city in the world
         </p>
       </header>
-      <main className="glass-panel" style={{ padding: '2rem', width: '100%', maxWidth: '600px' }}>
+
+      {/* Main Panel */}
+      <main className="glass-panel" style={{ padding: '1.75rem', width: '100%' }}>
         <SearchBar onSearch={handleSearch} />
-        <div style={{ marginTop: '2rem', minHeight: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+
+        <div style={{ marginTop: '1.75rem', minHeight: '180px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           {loading && (
-            <div className="flex-center flex-column" style={{ padding: '3rem 0' }}>
-              <div className="animate-spin" style={{ marginBottom: '1rem' }}>
-                <Loader2 size={32} color="var(--accent)" />
+            <div className="flex-center flex-column" style={{ padding: '2.5rem 0' }}>
+              <div className="animate-spin" style={{ marginBottom: '0.9rem' }}>
+                <Loader2 size={30} color="var(--accent)" />
               </div>
-              <p style={{ color: 'var(--text-secondary)' }}>Gathering clouds...</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                Scanning the atmosphere...
+              </p>
             </div>
           )}
+
           {error && !loading && (
-            <div className="glass-panel animate-fade-in" style={{ padding: '1.5rem', textAlign: 'center', borderColor: 'rgba(239, 68, 68, 0.3)' }}>
-              <h3 style={{ color: 'var(--danger)', marginBottom: '0.5rem' }}>Oops!</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>{error}</p>
+            <div className="animate-fade-in" style={{
+              padding: '1.25rem 1.5rem',
+              textAlign: 'center',
+              background: 'rgba(255, 77, 109, 0.08)',
+              border: '1px solid rgba(255, 77, 109, 0.25)',
+              borderRadius: '12px',
+            }}>
+              <h3 style={{ color: 'var(--danger)', marginBottom: '0.4rem', fontSize: '1rem' }}>
+                ⚠ Location not found
+              </h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{error}</p>
             </div>
           )}
+
           {!loading && !error && weatherData && (
             <WeatherCard weather={weatherData} unit={unit} onToggleUnit={toggleUnit} />
           )}
+
           {!loading && !error && !weatherData && (
-            <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', borderStyle: 'dashed' }}>
-              <p style={{ color: 'var(--text-secondary)' }}>Enter a city above to see the current weather.</p>
+            <div style={{
+              padding: '2rem',
+              textAlign: 'center',
+              border: '1px dashed rgba(124, 92, 252, 0.25)',
+              borderRadius: '12px',
+              background: 'rgba(124, 92, 252, 0.04)',
+            }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Enter a city name above to get live weather data.
+              </p>
             </div>
           )}
         </div>
+
         {recentCities.length > 0 && (
-          <div style={{ marginTop: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem' }}>
-            <RecentCities cities={recentCities} onSelectCity={handleCitySelect} />
-          </div>
+          <>
+            <hr className="neon-divider" style={{ marginTop: '1.75rem' }} />
+            <div style={{ marginTop: '1.5rem' }}>
+              <RecentCities cities={recentCities} onSelectCity={handleCitySelect} />
+            </div>
+          </>
         )}
       </main>
+
+      <footer style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+        <p style={{ color: 'rgba(180,175,255,0.3)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>
+          POWERED BY OPENWEATHERMAP API
+        </p>
+      </footer>
     </div>
   );
 }
